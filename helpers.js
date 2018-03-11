@@ -3,6 +3,9 @@
 // const frases = require('./frases');
 const keyboard = require('./keyboard.js');
 
+/*git rm -r --cached FolderName
+git commit -m "Removed folder from repository"
+git push origin master*/
 
 module.exports = {
 
@@ -13,13 +16,13 @@ module.exports = {
                      // console.log('-'+state+'-'+data)
                      if(state === data){
 
-                         if(data === 'video4'){
+                         if(data === 'video4' || data === 'video5' || data === 'video6'){
                              bot.sendMessage(id,message,{
                                  reply_markup: {
                                      inline_keyboard: [
                                          [{
                                              text: 'Да',
-                                             callback_data:  ' '
+                                             callback_data:  'HaveYouWatched_'+next
                                          }],
                                          [{
                                              text: 'Нет',

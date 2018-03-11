@@ -71,19 +71,46 @@ bot.on('callback_query', query => {
             firebase.database().ref('users/'+chat.id).update({state:'video4'});
             firebase.database().ref('warming/video4').once("value", function (snapshot) {
                 var warming = snapshot.val();
-                helpers.warmingUp(bot,firebase,chat.id,warming.delay,chat.first_name+warming.message,'video4',' ');
+                helpers.warmingUp(bot,firebase,chat.id,warming.delay,chat.first_name+warming.message,'video4','video5');
             }, function (errorObject) {
                 console.log("The read failed: " + errorObject);
             });
             bot.sendMessage(chat.id,frases.video4,keyboards.video4);
             break;
-
+        case('video5'):
+            firebase.database().ref('users/'+chat.id).update({state:'video5'});
+            firebase.database().ref('warming/video5').once("value", function (snapshot) {
+                var warming = snapshot.val();
+                helpers.warmingUp(bot,firebase,chat.id,warming.delay,chat.first_name+warming.message,'video5','video6');
+            }, function (errorObject) {
+                console.log("The read failed: " + errorObject);
+            });
+            bot.sendMessage(chat.id,frases.video5,keyboards.video5)
+            break;
+        case('video6'):
+            firebase.database().ref('users/'+chat.id).update({state:'video6'});
+            firebase.database().ref('warming/video6').once("value", function (snapshot) {
+                var warming = snapshot.val();
+                helpers.warmingUp(bot,firebase,chat.id,warming.delay,chat.first_name+warming.message,'video6','finish');
+            }, function (errorObject) {
+                console.log("The read failed: " + errorObject);
+            });
+            bot.sendMessage(chat.id,frases.video6,keyboards.video5)
+            break;
+        case('finish'):
+            firebase.database().ref('users/'+chat.id).update({state:'finish'});
+            bot.sendMessage(chat.id,frases.finish,{parse_mode:'HTML'})
+            break;
     };
 
     if(query.data.slice(0,-1) == 'more_by_video'){
         bot.sendMessage(chat.id,'Это ответы на часто задаваемые вопросы. Выберите интересующий вас вопрос',
             keyboards.getMoreKeyboard(query.data.split('_')[2]));
     }//2
+    else if(query.data.split('_')[0] === 'HaveYouWatched'){
+        firebase.database().ref('users/'+chat.id).update({state:query.data});
+        bot.sendMessage(chat.id,frases.HaveYouWatched,keyboards.HaveYouWatchedKey(query.data.split('_')[1]))
+    }
     try{
         // console.log(JSON.parse(query.data).timeout)
         switch (JSON.parse(query.data).type){

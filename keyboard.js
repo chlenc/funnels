@@ -20,16 +20,41 @@ module.exports = {
         }
     },
     video4: {
+        parse_mode: 'HTML',
         reply_markup: {
             inline_keyboard: [
                 [{
                     text: kb.pay,
-                    url: 'helpexcel.pro'
+                    url: frases.videoUrl
                 }],
             [ {
                 text: 'Хочу узнать больше!',
                 callback_data: kb.video4.more
             }]
+            ]
+        }
+    },
+    HaveYouWatchedKey(key) {
+        return{
+                parse_mode: 'HTML',
+                    reply_markup: {
+                inline_keyboard: [
+                    [{
+                        text: 'Да, успел ',
+                        callback_data:  key
+                    }]
+                ]
+            }
+        }
+    },
+    video5: {
+        parse_mode: 'HTML',
+        reply_markup: {
+            inline_keyboard: [
+                [{
+                    text: kb.pay,
+                    url: frases.videoUrl
+                }]
             ]
         }
     },
@@ -76,6 +101,7 @@ module.exports = {
     getFreeVideoTemplate(next,here){
         var message = frases[here];
         var keyboard = {
+            parse_mode: 'HTML',
             reply_markup: {
                 inline_keyboard: [
                     [{
